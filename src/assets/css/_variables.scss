@@ -1,11 +1,15 @@
 $todo-list-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-$todo-list-font-color: #4d4d4d;
-
-$todo-list-background-color: #f5f5f5;
+$todo-list-font-weight: 100;
+$todo-list-font-size: 16px;
 
 $todo-list-title-font-size: 100px;
+$todo-list-input-font-size: 24px;
 
-$todo-list-font-weight: 100;
-
+$todo-list-font-color: #4d4d4d;
 $todo-list-tittle-color: rgba(175, 47, 47, 0.15);
+$todo-list-background-color: #f5f5f5;
+$todo-list-footer-color: #777;
+$todo-list-click-border-color: rgba(175, 47, 47, 0.2);
+
+$shadow: 0 0px 2px rgba(0, 0, 0, .3);
