@@ -1,15 +1,15 @@
 <!--
  * @Author: zxy
  * @Date: 2022-04-10 10:40:51
- * @LastEditTime: 2022-04-18 07:43:43
+ * @LastEditTime: 2022-04-26 17:37:09
  * @FilePath: /todo-list-demo/src/App.vue
 -->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoList from './views/todoList.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <TodoList />
 </template>
 
 <style lang="scss">
