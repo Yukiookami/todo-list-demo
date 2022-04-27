@@ -1,14 +1,14 @@
 <!--
  * @Author: zxy
  * @Date: 2022-04-26 17:31:35
- * @LastEditTime: 2022-04-26 17:31:36
+ * @LastEditTime: 2022-04-27 16:06:17
  * @FilePath: /todo-list/src/components/todoListItem.vue
 -->
 <template>
   <div class="todo-item-sec">
-    <input @click="changeCheck" type="checkbox" class="todo-item-check">
+    <input type="checkbox" class="todo-item-check">
     <label class="todo-title">
-      {{ props.todoTitle }}
+
     </label>
 
     <div class="del-button"></div>
@@ -30,7 +30,7 @@ $del-button-c: #af5b5e;
   font-family: $font-f;
   font-weight: 100;
   background-color: #fff;
-  width: 100%;
+  width: calc(100% + 4px);
   box-shadow: $shadow;
   
   .todo-item-check {
@@ -62,11 +62,6 @@ $del-button-c: #af5b5e;
     padding: 15px 15px 15px 60px;
     line-height: 1.2;
     transition: color 0.4s;
-    // height: 1rem;
-    // line-height: 1rem;
-    // width: 100%;
-    // white-space: nowrap;
-    // text-overflow: ellipsis;
   }
 
   .clear {
