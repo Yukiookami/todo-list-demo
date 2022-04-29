@@ -1,15 +1,13 @@
 <!--
  * @Author: zxy
  * @Date: 2022-04-26 17:31:35
- * @LastEditTime: 2022-04-27 16:06:17
+ * @LastEditTime: 2022-04-29 10:16:40
  * @FilePath: /todo-list/src/components/todoListItem.vue
 -->
 <template>
   <div class="todo-item-sec">
     <input type="checkbox" class="todo-item-check">
-    <label class="todo-title">
-
-    </label>
+    <label class="todo-title"></label>
 
     <div class="del-button"></div>
   </div>
@@ -20,14 +18,14 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/common.scss';
+@import '../assets/css/variables';
 $chek-h: 40px;
 $del-button-c: #af5b5e;
 
 .todo-item-sec {
   position: relative;
-  font-size: $font-si;
-  font-family: $font-f;
+  font-size: 1.5rem;
+  font-family: $todo-list-font-family;
   font-weight: 100;
   background-color: #fff;
   width: calc(100% + 4px);
@@ -44,7 +42,7 @@ $del-button-c: #af5b5e;
     border: none;
     -webkit-appearance: none;
     appearance: none;
-    background-image: url('../assets/img/check.svg');
+    background-image: url('../assets/image/check.svg');
     background-repeat: no-repeat;
     background-position: center left;
     cursor: pointer;
@@ -52,7 +50,7 @@ $del-button-c: #af5b5e;
   }
 
   .todo-item-checked {
-    background-image: url('../assets/img/checked.svg');
+    background-image: url('../assets/image/checked.svg');
   }
 
   .todo-title {
@@ -75,8 +73,8 @@ $del-button-c: #af5b5e;
     top: 0;
     right: 10px;
     bottom: 0;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     margin: auto 0;
     font-size: 30px;
     color: $del-button-c;
