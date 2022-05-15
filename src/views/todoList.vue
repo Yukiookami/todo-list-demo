@@ -1,8 +1,8 @@
 <!--
  * @Author: zxy
  * @Date: 2022-04-10 10:40:51
- * @LastEditTime: 2022-04-23 12:18:44
- * @FilePath: /todo-list/src/components/HelloWorld.vue
+ * @LastEditTime: 2022-05-15 12:01:19
+ * @FilePath: /todo-list/src/views/todoList.vue
 -->
 <template>
   <div class="todo-list-main-sec">
@@ -10,39 +10,136 @@
     
     <section class="todo-list-content-sec">
       <div class="todo-list-input-box">
-        <input class="todo-list-input" type="text" placeholder="What needs to be done" v-model="state.inputValue">
-        <label class="todo-list-clicl-all" ></label>
+        <input @keyup.enter="addTodo" class="todo-list-input" type="text" placeholder="What needs to be done" v-model="state.inputValue">
+        <label @click="checkAll" class="todo-list-clicl-all" ></label>
       </div>
       <!-- todoItem组件 -->
-      <div></div>
+      <template v-for="(item, index) in state.todoList" :key="`todolistItem${index}`">
+        <TodoListItem v-if="item.checked === state.filterBoolean || state.filterBoolean === 0"
+        :todoTitle="item.todoTitle"
+        :checked="item.checked"
+        :index="index"
+        @changeCheck="changeCheck"
+        @delItem="delItem"></TodoListItem>
+      </template>
       <!-- todoItem end -->
 
-      <div class="todo-list-footer">
+      <div class="todo-list-footer" v-if="state.todoList.length">
         <div class="todo-list-text-button-box">
-          <span>{{ state.cont }} items left</span>
+          <span>{{ state.left }} items left</span>
         </div>
 
         <div>
-          <span class="filter-button click">All</span>
-          <span class="filter-button">Active</span>
-          <span class="filter-button">Complete</span>
+          <span class="filter-button" 
+          :class="{'click': !state.filterNum}"
+          @click="changeFilterNum(0)">All</span>
+          <span class="filter-button" 
+          :class="{'click': state.filterNum === 1}"
+          @click="changeFilterNum(1)">Active</span>
+          <span class="filter-button" 
+          :class="{'click': state.filterNum === 2}"
+          @click="changeFilterNum(2)">Complete</span>
         </div>
 
-        <div class="todo-list-text-button-box"></div>
+        <div :class="{'show': state.left !== state.todoList.length}" 
+        class="todo-list-text-button-box clear-all" @click="delAll">
+          Clear completed
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { computed, onBeforeMount, reactive } from 'vue'
+
+// 组件
+import TodoListItem from '../components/todoListItem.vue';
 
 const title = 'Todos'
 
 const state = reactive({
   inputValue: '',
-  cont: 0
+  left: computed(() => {
+    let count = 0
+    state.todoList.forEach(ele => {
+      if (ele.checked) {
+        count++
+      } 
+    })
+
+    return state.todoList.length - count
+  }),
+  todoList: [
+    {
+      todoTitle: 'textValue',
+      checked: false
+    },
+    {
+      todoTitle: 'textValue',
+      checked: true
+    },
+    {
+      todoTitle: 'textValue',
+      checked: false
+    }
+  ],
+  filterNum: 0,
+  filterBoolean: computed(() => {
+    if (state.filterNum === 1) {
+      return false
+    } else if (state.filterNum === 2) {
+      return true 
+    } else {
+      return 0
+    }
+  }) 
 })
+
+const changeCheck = (index) => {
+  state.todoList[index].checked = !state.todoList[index].checked 
+}
+
+const delItem = (index) => {
+  state.todoList.splice(index, 1)
+}
+
+const checkAll = () => {
+  if (state.left !== 0) {
+    state.todoList.forEach(ele => {
+      ele.checked = true
+    })
+  } else {
+    state.todoList.forEach(ele => {
+      ele.checked = false
+    })
+  }
+}
+
+const delAll = () => {
+  state.todoList = state.todoList.filter(ele => {
+    if (!ele.checked) {
+      return ele
+    }
+  })
+}
+
+const addTodo = () => {
+  let todoValue = state.inputValue
+
+  todoValue ? state.todoList.push(
+    {
+      todoTitle: todoValue,
+      checked: false
+    }
+  ) : ''
+
+  state.inputValue = ''
+}
+
+const changeFilterNum = (val) => {
+  state.filterNum = val
+}
 </script>
 
 <style lang="scss" scoped>
@@ -143,6 +240,7 @@ $check-all-w: 30px;
       0 9px 1px -3px rgb(0 0 0 / 20%), 
       0 16px 0 -6px #f6f6f6, 
       0 17px 2px -6px rgb(0 0 0 / 20%);
+      z-index: -1;
     }
 
     .filter-button {
@@ -156,7 +254,7 @@ $check-all-w: 30px;
     }
 
     .todo-list-text-button-box {
-      width: 75px;
+      // width: 100px;
     }
 
     .click {
@@ -167,10 +265,13 @@ $check-all-w: 30px;
   .clear-all {
     cursor: pointer;
     opacity: 0;
+    z-index: -10;
+    // transition: all .3s ease-in-out;
   }
 
   .show {
     opacity: 1;
+    z-index: 1;
   }
 }
 </style>

@@ -1,20 +1,40 @@
 <!--
  * @Author: zxy
  * @Date: 2022-04-26 17:31:35
- * @LastEditTime: 2022-04-29 10:16:40
+ * @LastEditTime: 2022-05-15 10:27:39
  * @FilePath: /todo-list/src/components/todoListItem.vue
 -->
 <template>
   <div class="todo-item-sec">
-    <input type="checkbox" class="todo-item-check">
-    <label class="todo-title"></label>
-
-    <div class="del-button"></div>
+    <input @click="changeCheck" 
+    type="checkbox" class="todo-item-check"
+    :class="{'todo-item-checked': props.checked}">
+    <label class="todo-title"
+    :class="{'clear': props.checked}">{{ props.todoTitle }}</label>
+    
+    <div @click="delItem" class="del-button"></div>
   </div>
 </template>
 
 <script setup>
+const props = defineProps({
+  todoTitle: String,
+  checked: Boolean,
+  index: Number
+})
 
+const emit = defineEmits([
+  'changeCheck',
+  'delItem'
+])
+
+const changeCheck = () => {
+  emit('changeCheck', props.index)
+}
+
+const delItem = () => {
+  emit('delItem', props.index)
+}
 </script>
 
 <style lang="scss" scoped>
